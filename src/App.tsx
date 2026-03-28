@@ -16,6 +16,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { cn } from './lib/utils';
+import * as Content from './constants';
 
 // --- Components ---
 
@@ -30,7 +31,9 @@ const Navbar = () => {
             <div className="bg-navy p-1.5 rounded-lg">
               <Car className="text-white w-6 h-6" />
             </div>
-            <span className="text-xl font-bold text-navy tracking-tight">GoDoor <span className="text-orange-accent">Trans</span></span>
+            <span className="text-xl font-bold text-navy tracking-tight">
+              {Content.BRAND_NAME.split(' ')[0]} <span className="text-orange-accent">{Content.BRAND_NAME.split(' ')[1]}</span>
+            </span>
           </div>
           
           <div className="hidden md:flex items-center gap-8">
@@ -87,8 +90,8 @@ const BookingWidget = () => {
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Halo GoDoor Trans, saya ingin pesan travel:\nRute: ${formData.route}\nTanggal: ${formData.date}\nJumlah Penumpang: ${formData.passengers}`;
-    window.open(`https://wa.me/628123456789?text=${encodeURIComponent(message)}`, '_blank');
+    const message = `Halo ${Content.BRAND_NAME}, saya ingin pesan travel:\nRute: ${formData.route}\nTanggal: ${formData.date}\nJumlah Penumpang: ${formData.passengers}`;
+    window.open(`https://wa.me/${Content.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
@@ -108,9 +111,9 @@ const BookingWidget = () => {
               className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 appearance-none"
             >
               <option value="">-- Pilih Rute --</option>
-              <option value="Bandung ke Jakarta">Bandung ↔ Jakarta</option>
-              <option value="Bandung ke Soetta">Bandung ↔ Bandara Soetta</option>
-              <option value="Jakarta ke Bandung">Jakarta ↔ Bandung</option>
+              {Content.PRICING_ROUTES.map((r, i) => (
+                <option key={i} value={`${r.from} ke ${r.to}`}>{r.from} ↔ {r.to}</option>
+              ))}
             </select>
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           </div>
@@ -166,12 +169,6 @@ const FeatureCard = ({ icon: Icon, title, desc }: { icon: any, title: string, de
 );
 
 const PricingTable = () => {
-  const routes = [
-    { from: 'Bandung', to: 'Jakarta', type: 'Reguler / Private', price: '400.000' },
-    { from: 'Bandung', to: 'Bandara Soetta', type: 'Drop-off / Pickup', price: '450.000' },
-    { from: 'Jakarta', to: 'Bandung', type: 'Door to Door', price: '400.000' },
-  ];
-
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto">
@@ -185,7 +182,7 @@ const PricingTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {routes.map((route, i) => (
+            {Content.PRICING_ROUTES.map((route, i) => (
               <tr key={i} className="hover:bg-slate-50/50 transition-colors">
                 <td className="px-6 py-6">
                   <div className="flex items-center gap-3">
@@ -264,23 +261,21 @@ export default function App() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 bg-navy/10 text-navy text-xs font-bold rounded-full mb-6 uppercase tracking-widest">
-                Premium Door-to-Door Service
+                {Content.HERO_CONTENT.badge}
               </span>
               <h1 className="text-5xl lg:text-7xl font-black text-navy leading-[1.1] mb-6">
-                Travel Bandung – Jakarta <span className="text-orange-accent">Tanpa Ribet.</span>
+                {Content.HERO_CONTENT.title} <span className="text-orange-accent">{Content.HERO_CONTENT.titleAccent}</span>
               </h1>
               <p className="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
-                Capek nyetir sendiri atau ribet harus ke pool travel? GoDoor Trans jemput kamu langsung di depan rumah. Hemat tenaga, sampai tujuan dengan segar.
+                {Content.HERO_CONTENT.description}
               </p>
               <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 text-sm font-bold text-navy">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  Jemput di Depan Pintu
-                </div>
-                <div className="flex items-center gap-2 text-sm font-bold text-navy">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  Harga Transparan
-                </div>
+                {Content.HERO_CONTENT.features.map((f, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm font-bold text-navy">
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    {f}
+                  </div>
+                ))}
               </div>
             </motion.div>
 
@@ -299,31 +294,15 @@ export default function App() {
       <section id="services" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-black text-navy mb-4">Kenapa Memilih GoDoor Trans?</h2>
+            <h2 className="text-3xl lg:text-4xl font-black text-navy mb-4">Kenapa Memilih {Content.BRAND_NAME}?</h2>
             <p className="text-slate-500">Kami memberikan standar pelayanan tertinggi untuk setiap perjalanan Anda.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard 
-              icon={MapPin}
-              title="Door-to-Door"
-              desc="Jemput di rumah, antar sampai tujuan. Tidak perlu repot ke pool atau terminal."
-            />
-            <FeatureCard 
-              icon={ShieldCheck}
-              title="Harga Transparan"
-              desc="Mulai 400k tanpa biaya tersembunyi. Semua sudah termasuk tol dan parkir."
-            />
-            <FeatureCard 
-              icon={Users}
-              title="Driver Profesional"
-              desc="Sopir berpengalaman, ramah, dan hapal rute tercepat untuk Anda."
-            />
-            <FeatureCard 
-              icon={Clock}
-              title="Armada Prima"
-              desc="Unit terbaru (Innova Zenix/Hiace), AC dingin, kabin wangi, dan servis rutin."
-            />
+            {Content.SERVICES.map((s, i) => {
+              const icons = [MapPin, ShieldCheck, Users, Clock];
+              return <FeatureCard key={i} icon={icons[i]} title={s.title} desc={s.desc} />;
+            })}
           </div>
         </div>
       </section>
@@ -355,30 +334,20 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group relative overflow-hidden rounded-3xl aspect-video bg-slate-100">
-              <img 
-                src="https://picsum.photos/seed/car-zenix/800/450" 
-                alt="Toyota Innova Zenix" 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex flex-col justify-end p-8">
-                <h5 className="text-white text-xl font-bold">Toyota Innova Zenix</h5>
-                <p className="text-white/70 text-sm">Kapasitas 6 Penumpang • Captain Seat • AC Dual Zone</p>
+            {Content.FLEET.map((car, i) => (
+              <div key={i} className="group relative overflow-hidden rounded-3xl aspect-video bg-slate-100">
+                <img 
+                  src={car.image} 
+                  alt={car.name} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex flex-col justify-end p-8">
+                  <h5 className="text-white text-xl font-bold">{car.name}</h5>
+                  <p className="text-white/70 text-sm">{car.desc}</p>
+                </div>
               </div>
-            </div>
-            <div className="group relative overflow-hidden rounded-3xl aspect-video bg-slate-100">
-              <img 
-                src="https://picsum.photos/seed/car-hiace/800/450" 
-                alt="Toyota Hiace Premio" 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex flex-col justify-end p-8">
-                <h5 className="text-white text-xl font-bold">Toyota Hiace Premio</h5>
-                <p className="text-white/70 text-sm">Kapasitas 11 Penumpang • Kabin Luas • Reclining Seat</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -388,26 +357,13 @@ export default function App() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-black text-navy mb-4">Tanya Jawab (FAQ)</h2>
-            <p className="text-slate-500">Informasi lengkap seputar layanan GoDoor Trans.</p>
+            <p className="text-slate-500">Informasi lengkap seputar layanan {Content.BRAND_NAME}.</p>
           </div>
 
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-            <FAQItem 
-              question="Apakah harga sudah termasuk biaya tol?"
-              answer="Ya, semua harga yang tertera sudah termasuk biaya tol, bensin, dan jasa driver. Tidak ada biaya tambahan di tengah jalan."
-            />
-            <FAQItem 
-              question="Berapa kapasitas bagasi yang diperbolehkan?"
-              answer="Setiap penumpang diperbolehkan membawa 1 koper ukuran medium dan 1 tas ransel. Jika membawa barang berlebih, mohon informasikan admin saat booking."
-            />
-            <FAQItem 
-              question="Bagaimana jika jadwal keberangkatan berubah?"
-              answer="Perubahan jadwal bisa dilakukan maksimal 6 jam sebelum keberangkatan tanpa biaya tambahan, selama armada masih tersedia."
-            />
-            <FAQItem 
-              question="Apakah melayani pengiriman paket?"
-              answer="Ya, kami melayani pengiriman paket kilat door-to-door dengan tarif mulai dari Rp150.000 per paket."
-            />
+            {Content.FAQS.map((faq, i) => (
+              <FAQItem key={i} question={faq.question} answer={faq.answer} />
+            ))}
           </div>
         </div>
       </section>
@@ -421,10 +377,12 @@ export default function App() {
                 <div className="bg-white p-1.5 rounded-lg">
                   <Car className="text-navy w-6 h-6" />
                 </div>
-                <span className="text-2xl font-bold tracking-tight">GoDoor <span className="text-orange-accent">Trans</span></span>
+                <span className="text-2xl font-bold tracking-tight">
+                  {Content.BRAND_NAME.split(' ')[0]} <span className="text-orange-accent">{Content.BRAND_NAME.split(' ')[1]}</span>
+                </span>
               </div>
               <p className="text-white/60 max-w-sm leading-relaxed mb-8">
-                Layanan travel door-to-door profesional yang menghubungkan Bandung, Jakarta, dan Bandara Soekarno-Hatta dengan kenyamanan maksimal.
+                {Content.FOOTER_CONTENT.description}
               </p>
               <div className="flex gap-4">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-accent transition-colors cursor-pointer">
@@ -451,18 +409,18 @@ export default function App() {
               <ul className="space-y-4 text-white/60 text-sm">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-orange-accent shrink-0" />
-                  Jl. Pasteur No. 123, Bandung, Jawa Barat
+                  {Content.FOOTER_CONTENT.address}
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-orange-accent shrink-0" />
-                  +62 812 3456 789
+                  {Content.FOOTER_CONTENT.phone}
                 </li>
               </ul>
             </div>
           </div>
 
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 text-xs">
-            <p>© 2026 GoDoor Trans. All rights reserved.</p>
+            <p>© 2026 {Content.BRAND_NAME}. All rights reserved.</p>
             <div className="flex gap-6">
               <span>Privacy Policy</span>
               <span>Terms of Service</span>
@@ -473,7 +431,7 @@ export default function App() {
 
       {/* Floating WhatsApp Button */}
       <a 
-        href="https://wa.me/628123456789" 
+        href={`https://wa.me/${Content.WHATSAPP_NUMBER}`} 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-2 group"
