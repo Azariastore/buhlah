@@ -11,6 +11,8 @@ import {
   Clock, 
   ShieldCheck, 
   Car,
+  Instagram,
+  Music2,
   Menu,
   X,
   ArrowRight
@@ -385,11 +387,14 @@ export default function App() {
                 {Content.FOOTER_CONTENT.description}
               </p>
               <div className="flex gap-4">
+                <a href={Content.FOOTER_CONTENT.socials.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-accent transition-colors cursor-pointer">
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href={Content.FOOTER_CONTENT.socials.tiktok} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-accent transition-colors cursor-pointer">
+                  <Music2 className="w-5 h-5" />
+                </a>
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-accent transition-colors cursor-pointer">
                   <Phone className="w-5 h-5" />
-                </div>
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-accent transition-colors cursor-pointer">
-                  <MessageCircle className="w-5 h-5" />
                 </div>
               </div>
             </div>

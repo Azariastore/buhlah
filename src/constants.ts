@@ -25,7 +25,7 @@ export const SERVICES = [
   },
   {
     title: "Armada Prima",
-    desc: "Unit terbaru (Innova Zenix/Hiace), AC dingin, kabin wangi, dan servis rutin."
+    desc: "Unit terbaru (Avanza/Innova), AC dingin, kabin wangi, dan servis rutin."
   }
 ];
 
@@ -37,14 +37,14 @@ export const PRICING_ROUTES = [
 
 export const FLEET = [
   {
+    name: "All New Avanza",
+    desc: "Kapasitas 6 Penumpang • Nyaman • Irit Bahan Bakar",
+    image: "https://static.republika.co.id/uploads/images/inpicture_slide/all-new-toyota-avanza-_211110151806-646.jpg"
+  },
+  {
     name: "Toyota Innova Zenix",
     desc: "Kapasitas 6 Penumpang • Captain Seat • AC Dual Zone",
     image: "https://picsum.photos/seed/car-zenix/800/450"
-  },
-  {
-    name: "Toyota Hiace Premio",
-    desc: "Kapasitas 11 Penumpang • Kabin Luas • Reclining Seat",
-    image: "https://picsum.photos/seed/car-hiace/800/450"
   }
 ];
 
@@ -70,5 +70,9 @@ export const FAQS = [
 export const FOOTER_CONTENT = {
   description: "Layanan travel door-to-door profesional yang menghubungkan Bandung, Jakarta, dan Bandara Soekarno-Hatta dengan kenyamanan maksimal.",
   address: "Jl. Pasteur No. 123, Bandung, Jawa Barat",
-  phone: "+62 812 3456 789"
+  phone: "+62 812 2474 2448",
+  socials: {
+    instagram: "https://instagram.com/yonotrans",
+    tiktok: "https://tiktok.com/@yonotrans"
+  }
 };
