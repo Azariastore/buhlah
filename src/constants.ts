@@ -1,12 +1,12 @@
-export const BRAND_NAME = "GoDoor Trans";
+export const BRAND_NAME = "Yono Trans";
 export const TAGLINE = "Duduk Manis, Kami Jemput di Depan Pintu.";
-export const WHATSAPP_NUMBER = "628123456789";
+export const WHATSAPP_NUMBER = "6281224742448";
 
 export const HERO_CONTENT = {
   badge: "Premium Door-to-Door Service",
   title: "Travel Bandung – Jakarta",
   titleAccent: "Tanpa Ribet.",
-  description: "Capek nyetir sendiri atau ribet harus ke pool travel? GoDoor Trans jemput kamu langsung di depan rumah. Hemat tenaga, sampai tujuan dengan segar.",
+  description: "Capek nyetir sendiri atau ribet harus ke pool travel? Yono Trans jemput kamu langsung di depan rumah. Hemat tenaga, sampai tujuan dengan segar.",
   features: ["Jemput di Depan Pintu", "Harga Transparan"]
 };
 
