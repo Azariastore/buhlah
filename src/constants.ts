@@ -6,7 +6,7 @@ export const HERO_CONTENT = {
   badge: "Premium Door-to-Door Service",
   title: "Travel Bandung – Jakarta",
   titleAccent: "Tanpa Ribet.",
-  description: "Capek nyetir sendiri atau ribet harus ke pool travel? Yono Trans jemput kamu langsung di depan rumah. Hemat tenaga, sampai tujuan dengan segar.",
+  description: "Capek nyetir sendiri atau ribet harus ke pool travel? Yono Trans jemput kamu langsung di depan rumah. Hemat tenaga, sampai tujuan dengan selamat.",
   features: ["Jemput di Depan Pintu", "Harga Transparan"]
 };
 
@@ -72,7 +72,7 @@ export const FOOTER_CONTENT = {
   address: "Jl. Pasteur No. 123, Bandung, Jawa Barat",
   phone: "+62 812 2474 2448",
   socials: {
-    instagram: "https://instagram.com/yonotrans",
-    tiktok: "https://tiktok.com/@yonotrans"
+    instagram: "https://www.instagram.com/yontravel_",
+    tiktok: "https://tiktok.com/@user875918029"
   }
 };

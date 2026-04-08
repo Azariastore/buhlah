@@ -25,6 +25,10 @@ import * as Content from './constants';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handlePesan = () => {
+    window.open(`https://wa.me/${Content.WHATSAPP_NUMBER}`, '_blank');
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +47,10 @@ const Navbar = () => {
             <a href="#services" className="text-sm font-medium text-slate-600 hover:text-navy transition-colors">Layanan</a>
             <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-navy transition-colors">Harga</a>
             <a href="#faq" className="text-sm font-medium text-slate-600 hover:text-navy transition-colors">FAQ</a>
-            <button className="bg-navy text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-navy/90 transition-all shadow-lg shadow-navy/20">
+            <button 
+              onClick={handlePesan}
+              className="bg-navy text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-navy/90 transition-all shadow-lg shadow-navy/20"
+            >
               Pesan Sekarang
             </button>
           </div>
@@ -71,7 +78,10 @@ const Navbar = () => {
               <a href="#pricing" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-600">Harga</a>
               <a href="#faq" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-600">FAQ</a>
               <div className="pt-4">
-                <button className="w-full bg-navy text-white px-5 py-3 rounded-xl text-base font-semibold">
+                <button 
+                  onClick={() => { handlePesan(); setIsOpen(false); }}
+                  className="w-full bg-navy text-white px-5 py-3 rounded-xl text-base font-semibold"
+                >
                   Pesan Sekarang
                 </button>
               </div>
@@ -171,6 +181,8 @@ const FeatureCard = ({ icon: Icon, title, desc }: { icon: any, title: string, de
 );
 
 const PricingTable = () => {
+  const [selectedRoute, setSelectedRoute] = useState<any>(null);
+
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto">
@@ -198,13 +210,79 @@ const PricingTable = () => {
                   <span className="text-lg font-black text-navy">Rp{route.price}</span>
                 </td>
                 <td className="px-6 py-6 text-right">
-                  <button className="text-orange-accent font-bold text-sm hover:underline">Detail</button>
+                  <button 
+                    onClick={() => setSelectedRoute(route)}
+                    className="text-orange-accent font-bold text-sm hover:underline"
+                  >
+                    Detail
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Detail Popup Modal */}
+      <AnimatePresence>
+        {selectedRoute && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-navy/40 backdrop-blur-sm">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setSelectedRoute(null)}
+                className="absolute top-6 right-6 text-slate-400 hover:text-navy"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <h3 className="text-2xl font-black text-navy mb-6">Detail Perjalanan</h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl">
+                  <div className="w-10 h-10 bg-navy rounded-xl flex items-center justify-center text-white font-bold">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Rute</p>
+                    <p className="font-bold text-navy">{selectedRoute.from} ↔ {selectedRoute.to}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-600">Layanan <span className="font-bold text-navy">{selectedRoute.type}</span> dengan penjemputan langsung di depan pintu rumah.</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-600">Harga <span className="font-bold text-navy">Rp{selectedRoute.price}</span> sudah termasuk biaya tol, bensin, dan jasa driver.</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-600">Armada pilihan (Avanza/Innova) yang bersih, wangi, dan terawat.</p>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => {
+                    const message = `Halo ${Content.BRAND_NAME}, saya ingin tanya detail rute ${selectedRoute.from} - ${selectedRoute.to}`;
+                    window.open(`https://wa.me/${Content.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+                  }}
+                  className="w-full bg-navy text-white font-bold py-4 rounded-xl shadow-lg shadow-navy/20 hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Tanya Admin via WA
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
